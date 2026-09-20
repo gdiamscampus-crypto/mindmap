@@ -1,0 +1,6 @@
+{
+  "name": "Mind Mapping Studio",
+  "description": "A modern, responsive Mind Mapping Web App similar to MindNode for students, teachers, and professionals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
