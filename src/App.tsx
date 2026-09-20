@@ -10,6 +10,7 @@ import { Toolbar } from './components/Toolbar';
 import { LeftSidebar } from './components/LeftSidebar';
 import { RightSidebar } from './components/RightSidebar';
 import { MindMapCanvas } from './components/MindMapCanvas';
+import { TeachersWorkshopView } from './components/workshop/TeachersWorkshopView';
 import { calculateAutoLayout } from './utils/layout';
 import { exportMapAsJson, exportMapAsPdf, exportMapAsPng, exportMapAsSvg, getMapBoundingBox } from './utils/export';
 
@@ -38,6 +39,7 @@ export default function App() {
   const [future, setFuture] = useState<MindMap[]>([]);
 
   // Selection & UI state
+  const [currentView, setCurrentView] = useState<'canvas' | 'workshop'>('workshop');
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>('root');
   const [isSaved, setIsSaved] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
@@ -704,6 +706,43 @@ export default function App() {
 
   const selectedNode = selectedNodeId ? map.nodes[selectedNodeId] || null : null;
 
+  const handleApplyWorkshopMindMap = (mapData: {
+    title: string;
+    rootId: string;
+    nodes: Record<string, MindNodeData>;
+    defaultLineStyle?: ConnectionStyle;
+  }) => {
+    const newMap: MindMap = {
+      id: `map-${Date.now()}`,
+      title: mapData.title || 'Teacher Workshop Mind Map',
+      rootId: mapData.rootId,
+      nodes: mapData.nodes,
+      backgroundColor: '#ffffff',
+      canvasPattern: 'dots',
+      defaultLineStyle: mapData.defaultLineStyle || 'curved',
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    };
+
+    pushToHistory(newMap);
+    setSelectedNodeId(mapData.rootId);
+    setCurrentView('canvas');
+    setViewport({
+      x: window.innerWidth / 2 - 600,
+      y: window.innerHeight / 2 - 400,
+      zoom: 0.85,
+    });
+  };
+
+  if (currentView === 'workshop') {
+    return (
+      <TeachersWorkshopView
+        onBackToCanvas={() => setCurrentView('canvas')}
+        onApplyMindMap={handleApplyWorkshopMindMap}
+      />
+    );
+  }
+
   return (
     <div
       id="app-root"
@@ -743,6 +782,7 @@ export default function App() {
         onToggleRightSidebar={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
         isLeftSidebarOpen={isLeftSidebarOpen}
         isRightSidebarOpen={isRightSidebarOpen}
+        onOpenWorkshop={() => setCurrentView('workshop')}
       />
 
       {/* Main Workspace: Left Sidebar + Canvas + Right Sidebar */}
@@ -769,6 +809,7 @@ export default function App() {
           }}
           onImportJson={handleImportJson}
           onAddChild={handleAddChild}
+          onOpenWorkshop={() => setCurrentView('workshop')}
         />
 
         {/* Central Infinite Canvas */}

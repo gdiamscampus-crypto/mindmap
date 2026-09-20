@@ -59,3 +59,86 @@ export interface TemplateDefinition {
   iconName: string;
   map: Omit<MindMap, 'id' | 'createdAt' | 'updatedAt'>;
 }
+
+// ==========================================
+// AI for Teachers Workshop Types
+// ==========================================
+
+export interface LessonPlanData {
+  subject: string;
+  grade: string;
+  topic: string;
+  duration: string;
+  learningObjectives: string[];
+  learningOutcomes: string[];
+  previousKnowledge: string[];
+  warmupActivity: {
+    title: string;
+    description: string;
+    time: string;
+  };
+  teachingActivities: {
+    step: string;
+    time: string;
+    details: string;
+  }[];
+  examples: string[];
+  studentActivity: {
+    title: string;
+    instructions: string[];
+    time: string;
+  };
+  assessmentQuestions: string[];
+  homework: string[];
+  differentiationSlowLearners: string[];
+  extensionAdvancedLearners: string[];
+}
+
+export interface StudentMarkRecord {
+  id: string;
+  name: string;
+  test1: number; // max 20
+  test2: number; // max 20
+  assignment: number; // max 10
+  activity: number; // max 10
+  finalExam: number; // max 40
+}
+
+export interface SlideData {
+  slideNumber: number;
+  title: string;
+  content: string[];
+  suggestedVisual: string;
+  speakingPoint: string;
+}
+
+export interface QuizQuestionData {
+  id: number;
+  type: 'mcq' | 'true_false' | 'application';
+  question: string;
+  options?: string[];
+  correctAnswer: string;
+  marks: number;
+  explanation: string;
+  autoGrading: boolean;
+}
+
+export interface WorkshopPackage {
+  id: string;
+  subject: string;
+  grade: string;
+  topic: string;
+  duration: string;
+  createdAt: number;
+  lessonPlan: LessonPlanData;
+  students: StudentMarkRecord[];
+  slides: SlideData[];
+  quiz: QuizQuestionData[];
+  checklist: {
+    docsCompleted: boolean;
+    sheetsCompleted: boolean;
+    slidesCompleted: boolean;
+    formsCompleted: boolean;
+  };
+}
+

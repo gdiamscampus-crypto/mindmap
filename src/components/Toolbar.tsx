@@ -57,6 +57,7 @@ interface ToolbarProps {
   onToggleRightSidebar: () => void;
   isLeftSidebarOpen: boolean;
   isRightSidebarOpen: boolean;
+  onOpenWorkshop?: () => void;
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({
@@ -88,6 +89,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   isSaved,
   isDarkMode,
   onToggleDarkMode,
+  onOpenWorkshop,
 }) => {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [titleInput, setTitleInput] = useState(mapTitle);
@@ -358,6 +360,20 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           )}
           <span className="hidden md:inline">{isSaved ? 'Saved' : 'Save'}</span>
         </button>
+
+        {/* AI for Teachers Workshop Button */}
+        {onOpenWorkshop && (
+          <button
+            id="btn-open-workshop"
+            onClick={onOpenWorkshop}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-xs font-semibold shadow-xs hover:shadow-md transition-all shrink-0"
+            title="AI for Teachers Workshop - Generate connected Docs, Sheets, Slides, and Forms"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+            <span className="hidden sm:inline">AI Teachers Workshop</span>
+            <span className="sm:hidden">Workshop</span>
+          </button>
+        )}
 
         {/* Export Dropdown */}
         <div className="relative" ref={exportRef}>

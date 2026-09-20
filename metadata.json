@@ -1,6 +1,6 @@
 {
   "name": "Mind Mapping Studio",
-  "description": "A modern, responsive Mind Mapping Web App similar to MindNode for students, teachers, and professionals.",
+  "description": "A modern, responsive Mind Mapping Web App and AI for Teachers Workshop Activity Generator for Google Docs, Sheets, Slides, and Forms.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

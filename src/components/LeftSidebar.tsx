@@ -28,6 +28,7 @@ interface LeftSidebarProps {
   onSelectNode: (id: string) => void;
   onImportJson: (file: File) => void;
   onAddChild: (parentId: string) => void;
+  onOpenWorkshop?: () => void;
 }
 
 type TabType = 'templates' | 'outline' | 'shortcuts';
@@ -42,6 +43,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
   onSelectNode,
   onImportJson,
   onAddChild,
+  onOpenWorkshop,
 }) => {
   const [activeTab, setActiveTab] = useState<TabType>('templates');
   const [outlineSearch, setOutlineSearch] = useState('');
@@ -245,6 +247,30 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
                   Import JSON
                 </button>
               </div>
+
+              {/* AI for Teachers Workshop Banner Card */}
+              {onOpenWorkshop && (
+                <div
+                  id="sidebar-workshop-cta"
+                  onClick={onOpenWorkshop}
+                  className="p-3 rounded-xl border border-blue-200 dark:border-blue-900 bg-gradient-to-br from-blue-50 to-indigo-50/50 dark:from-blue-950/40 dark:to-indigo-950/30 hover:border-blue-400 cursor-pointer transition-all shadow-xs group"
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-600 text-white">
+                      Workshop
+                    </span>
+                    <span className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold group-hover:translate-x-0.5 transition-transform flex items-center">
+                      Launch &rarr;
+                    </span>
+                  </div>
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                    AI for Teachers Workshop
+                  </h4>
+                  <p className="text-[11px] text-slate-600 dark:text-slate-300 mt-1 leading-snug">
+                    Generate connected Google Docs (Lesson Plan), Sheets (Marksheet), Slides & Forms for one topic.
+                  </p>
+                </div>
+              )}
 
               {TEMPLATES.map((tmpl) => (
                 <div
